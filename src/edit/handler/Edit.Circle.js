@@ -2,9 +2,9 @@ L.Edit = L.Edit || {};
 
 L.Edit.Circle = L.Edit.SimpleShape.extend({
 	_createMoveMarker: function () {
-		var center = this._shape.getLatLng();
+		//var center = this._shape.getLatLng();
 
-		this._moveMarker = this._createMarker(center, this.options.moveIcon);
+		//this._moveMarker = this._createMarker(center, this.options.moveIcon);
 	},
 
 	_createResizeMarker: function () {

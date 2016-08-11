@@ -5,7 +5,7 @@ L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 		var bounds = this._shape.getBounds(),
 			center = bounds.getCenter();
 
-		this._moveMarker = this._createMarker(center, this.options.moveIcon);
+		//this._moveMarker = this._createMarker(center, this.options.moveIcon);
 	},
 
 	_createResizeMarker: function () {
@@ -81,7 +81,7 @@ L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 
 		// Reposition the move marker
 		bounds = this._shape.getBounds();
-		this._moveMarker.setLatLng(bounds.getCenter());
+		this._moveMarker && this._moveMarker.setLatLng(bounds.getCenter());
 	},
 
 	_getCorners: function () {

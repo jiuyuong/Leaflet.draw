@@ -25,10 +25,22 @@ L.Edit.SimpleShape = L.Handler.extend({
 				this._initMarkers();
 			}
 			this._map.addLayer(this._markerGroup);
+
+			this._shape.on('move',this.move,this);
+			this._shape.dragging && this._shape.dragging.enable();
 		}
 	},
-
+	move:function (e) {
+		for (var i = 0, l = this._resizeMarkers.length; i < l; i++) {
+			var oldPoint = this._shape._map.latLngToLayerPoint(this._resizeMarkers[i].getLatLng());
+			oldPoint._add(e.offset);
+			var newLatLng = this._shape._map.layerPointToLatLng(oldPoint);
+			this._resizeMarkers[i].setLatLng(newLatLng);
+		}
+	},
 	removeHooks: function () {
+		this._shape.dragging && this._shape.dragging.disable();
+		this._shape.off('move',this.move,this);
 		if (this._shape._map) {
 			this._unbindMarker(this._moveMarker);
 
@@ -84,14 +96,14 @@ L.Edit.SimpleShape = L.Handler.extend({
 	},
 
 	_bindMarker: function (marker) {
-		marker
+		marker && marker
 			.on('dragstart', this._onMarkerDragStart, this)
 			.on('drag', this._onMarkerDrag, this)
 			.on('dragend', this._onMarkerDragEnd, this);
 	},
 
 	_unbindMarker: function (marker) {
-		marker
+		marker && marker
 			.off('dragstart', this._onMarkerDragStart, this)
 			.off('drag', this._onMarkerDrag, this)
 			.off('dragend', this._onMarkerDragEnd, this);

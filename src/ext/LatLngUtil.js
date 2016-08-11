@@ -7,7 +7,7 @@ L.LatLngUtil = {
 	cloneLatLngs: function (latlngs) {
 		var clone = [];
 		for (var i = 0, l = latlngs.length; i < l; i++) {
-			clone.push(this.cloneLatLng(latlngs[i]));
+			clone.push(latlngs[i].length?this.cloneLatLngs(latlngs[i]):this.cloneLatLng(latlngs[i]));
 		}
 		return clone;
 	},
