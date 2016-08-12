@@ -26,10 +26,21 @@ L.Edit.Poly = L.Handler.extend({
 				this._initMarkers();
 			}
 			this._poly._map.addLayer(this._markerGroup);
+			this._poly.on('move',this.move,this);
 		}
 	},
 
+	move:function (e) {
+		this._markerGroup && this._markerGroup.eachLayer(function (marker) {
+			var oldPoint = marker._map.latLngToLayerPoint(marker.getLatLng());
+			oldPoint._add(e.offset);
+			var newLatLng = marker._map.layerPointToLatLng(oldPoint);
+			marker.setLatLng(newLatLng);
+		});
+	},
+
 	removeHooks: function () {
+		this._poly.off('move',this.move,this);
 		if (this._poly._map) {
 			this._poly._map.removeLayer(this._markerGroup);
 			delete this._markerGroup;

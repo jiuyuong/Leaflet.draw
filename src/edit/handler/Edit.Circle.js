@@ -33,7 +33,7 @@ L.Edit.Circle = L.Edit.SimpleShape.extend({
 	},
 
 	_resize: function (latlng) {
-		var moveLatLng = this._moveMarker.getLatLng(),
+		var moveLatLng = (this._moveMarker||this._shape).getLatLng(),
 			radius = moveLatLng.distanceTo(latlng);
 
 		this._shape.setRadius(radius);

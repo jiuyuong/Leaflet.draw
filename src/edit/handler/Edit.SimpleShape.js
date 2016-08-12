@@ -27,19 +27,17 @@ L.Edit.SimpleShape = L.Handler.extend({
 			this._map.addLayer(this._markerGroup);
 
 			this._shape.on('move',this.move,this);
-			this._shape.dragging && this._shape.dragging.enable();
 		}
 	},
 	move:function (e) {
-		for (var i = 0, l = this._resizeMarkers.length; i < l; i++) {
-			var oldPoint = this._shape._map.latLngToLayerPoint(this._resizeMarkers[i].getLatLng());
+		this._markerGroup && this._markerGroup.eachLayer(function (marker) {
+			var oldPoint = marker._map.latLngToLayerPoint(marker.getLatLng());
 			oldPoint._add(e.offset);
-			var newLatLng = this._shape._map.layerPointToLatLng(oldPoint);
-			this._resizeMarkers[i].setLatLng(newLatLng);
-		}
+			var newLatLng = marker._map.layerPointToLatLng(oldPoint);
+			marker.setLatLng(newLatLng);
+		});
 	},
 	removeHooks: function () {
-		this._shape.dragging && this._shape.dragging.disable();
 		this._shape.off('move',this.move,this);
 		if (this._shape._map) {
 			this._unbindMarker(this._moveMarker);
