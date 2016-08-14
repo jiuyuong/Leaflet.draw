@@ -5,7 +5,10 @@ L.DrawToolbar = L.Toolbar.extend({
 		polygon: {},
 		rectangle: {},
 		circle: {},
-		marker: {}
+		marker: {},
+		line: {},
+		arrow: {},
+		task: {}
 	},
 
 	initialize: function (options) {
@@ -48,6 +51,21 @@ L.DrawToolbar = L.Toolbar.extend({
 				enabled: this.options.marker,
 				handler: new L.Draw.Marker(map, this.options.marker),
 				title: L.drawLocal.draw.toolbar.buttons.marker
+			},
+			{
+				enabled: this.options.line,
+				handler: new L.Draw.Line(map, this.options.line),
+				title: L.drawLocal.draw.toolbar.buttons.line
+			},
+			{
+				enabled: this.options.arrow,
+				handler: new L.Draw.Arrow(map, this.options.line),
+				title: L.drawLocal.draw.toolbar.buttons.line
+			},
+			{
+				enabled: this.options.task,
+				handler: new L.Draw.Task(map, this.options.line),
+				title: L.drawLocal.draw.toolbar.buttons.line
 			}
 		];
 	},

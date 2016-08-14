@@ -1,9 +1,24 @@
 var deps = {
 	Core: {
 		src: [
-			'Leaflet.draw.js'
+			'leaflet.js',
+			'Leaflet.draw.js',
+			'handler/PathDraggable.js'
 		],
 		desc: 'The core of the plugin. Currently only includes the version.'
+	},
+
+	Layer:{
+		src:[
+			'layer/SheetLayer.js',
+			'layer/vector/Path.js',
+			'layer/DragPath.js',
+			'layer/vector/Line.js',
+			'layer/vector/Arrow.js',
+			'layer/vector/Task.js'
+		],
+		desc:'layer s',
+		deps:['Core']
 	},
 
 	DrawHandlers: {
@@ -14,7 +29,10 @@ var deps = {
 			'draw/handler/Draw.SimpleShape.js',
 			'draw/handler/Draw.Rectangle.js',
 			'draw/handler/Draw.Circle.js',
-			'draw/handler/Draw.Marker.js'
+			'draw/handler/Draw.Marker.js',
+			'draw/handler/Draw.Line.js',
+			'draw/handler/Draw.Arrow.js',
+			'draw/handler/Draw.Task.js'
 		],
 		desc: 'Drawing handlers for: polylines, polygons, rectangles, circles and markers.',
 		deps: ['Core']
@@ -25,7 +43,10 @@ var deps = {
 			'edit/handler/Edit.Poly.js',
 			'edit/handler/Edit.SimpleShape.js',
 			'edit/handler/Edit.Rectangle.js',
-			'edit/handler/Edit.Circle.js'
+			'edit/handler/Edit.Circle.js',
+			'edit/handler/Edit.Line.js',
+			'edit/handler/Edit.Arrow.js',
+			'edit/handler/Edit.Task.js'
 		],
 		desc: 'Editing handlers for: polylines, polygons, rectangles, and circles.',
 		deps: ['Core']
@@ -68,6 +89,14 @@ var deps = {
 		],
 		desc: 'Edit toolbar.',
 		deps: ['EditHandlers', 'CommonUI']
+	},
+
+	SXT:{
+		src:[
+			'sxt/SheetGroup.js',
+			'sxt/Matters.js'
+		],
+		deps:['Core']
 	}
 };
 

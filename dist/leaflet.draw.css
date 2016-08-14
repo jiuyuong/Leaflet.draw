@@ -344,3 +344,7 @@
 	height: 27px;
 	line-height: 27px;
 }
+
+.leaflet-container{
+	background: #ffffff;
+}

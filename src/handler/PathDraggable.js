@@ -8,6 +8,7 @@ L.PathDraggable = L.Draggable.extend({
         this._path = path;
         this._canvas = (path._map.getRenderer(path) instanceof L.Canvas);
         var element = this._canvas ? this._path._map.getRenderer(this._path)._container : this._path._path;
+        //console.log('element',element,path._map.getContainer());
         L.Draggable.prototype.initialize.call(this, element, element, true);
     },
 

@@ -19,11 +19,6 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 		guidelineDistance: 20,
 		maxGuideLineLength: 4000,
 		shapeOptions: {
-			stroke: true,
-			color: '#f06eaa',
-			weight: 4,
-			opacity: 0.5,
-			fill: false,
 			clickable: true
 		},
 		metric: true, // Whether to use the metric meaurement system or imperial

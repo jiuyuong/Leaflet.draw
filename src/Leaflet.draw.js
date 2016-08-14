@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Leaflet.draw assumes that you have already included the Leaflet library.
  */
 
@@ -20,7 +20,8 @@ L.drawLocal = {
 				polygon: 'Draw a polygon',
 				rectangle: 'Draw a rectangle',
 				circle: 'Draw a circle',
-				marker: 'Draw a marker'
+				marker: 'Draw a marker',
+				line: '画线'
 			}
 		},
 		handlers: {
@@ -57,6 +58,11 @@ L.drawLocal = {
 			simpleshape: {
 				tooltip: {
 					end: 'Release mouse to finish drawing.'
+				}
+			},
+			line: {
+				tooltip: {
+					start: 'start'
 				}
 			}
 		}

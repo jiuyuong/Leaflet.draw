@@ -2,8 +2,25 @@ var fs = require('fs'),
 	jshint = require('jshint'),
 	UglifyJS = require('uglify-js'),
 	zlib = require('zlib'),
-
+	Pbf = require('pbf'),
 	deps = require('./deps.js').deps;
+
+var ef = {};
+
+ef.read = function (pbf, end) {
+	var buff = {
+	}
+	pbf.readFields(ef._readField, buff, end);
+	return buff;
+};
+ef._readField = function (tag, obj, pbf) {
+	if (tag === 1) obj.id = pbf.readVarint();
+	else if (tag === 2) obj.js = pbf.readBytes();
+};
+ef.write = function (obj, pbf) {
+	if (obj.id !== undefined) pbf.writeVarintField(1, obj.id);
+	if (obj.js !== undefined) pbf.writeBytesField(2,obj.js);//for (var i = 0; i < obj.js.length; i++) pbf.writeVarintField(2, obj.js.charCodeAt(i));
+};
 
 function getFiles(compsBase32) {
 	var memo = {},
@@ -92,7 +109,7 @@ exports.build = function (callback, compsBase32, buildName) {
 		outro = '}(window, document));',
 		newSrc = copy + intro + combineFiles(files) + outro,
 
-		pathPart = 'dist/leaflet.draw' + (buildName ? '-' + buildName : ''),
+		pathPart = 'dist/res' + (buildName ? '-' + buildName : ''),
 		srcPath = pathPart + '-src.js',
 
 		oldSrc = loadSilently(srcPath),
@@ -130,15 +147,24 @@ exports.build = function (callback, compsBase32, buildName) {
 	zlib.gzip(newCompressed, function (err, gzipped) {
 		if (err) { return; }
 		newGzipped = gzipped;
-		if (oldCompressed && (oldCompressed !== newCompressed)) {
-			zlib.gzip(oldCompressed, function (err, oldGzipped) {
-				if (err) { return; }
-				gzippedDelta = getSizeDelta(gzipped, oldGzipped);
+		var pbf = new Pbf();
+		ef.write({
+			id:1,
+			js:newGzipped
+		},pbf);
+		fs.writeFile(pathPart + '.pbf',pbf.finish(),function () {
+			if (oldCompressed && (oldCompressed !== newCompressed)) {
+				zlib.gzip(oldCompressed, function (err, oldGzipped) {
+					if (err) {
+						return;
+					}
+					gzippedDelta = getSizeDelta(gzipped, oldGzipped);
+					done();
+				});
+			} else {
 				done();
-			});
-		} else {
-			done();
-		}
+			}
+		});
 	});
 };
 

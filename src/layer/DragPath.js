@@ -1,5 +1,5 @@
 /**
- * Created by jiuyuong on 2016/8/12.
+ * Created by jiuyuong on 2016/8/11.
  */
 L.DragPath = L.Path.extend({
     impostorOptions:{
@@ -13,6 +13,7 @@ L.DragPath = L.Path.extend({
     _initEvents:function() {
         L.Path.prototype._initEvents.call(this);
         if (this.options.clickable) {
+            //this._dragImpostor.setAttribute("class", "leaflet-clickable");
             L.DomEvent.on(this._container, "click", this._onMouseClick, this);
             var events = [ "dblclick", "mousedown", "mouseover", "mouseout", "mousemove", "contextmenu" ];
             for (var i = 0; i < events.length; i++)

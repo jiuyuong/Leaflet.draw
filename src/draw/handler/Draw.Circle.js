@@ -5,13 +5,7 @@ L.Draw.Circle = L.Draw.SimpleShape.extend({
 
 	options: {
 		shapeOptions: {
-			stroke: true,
-			color: '#f06eaa',
-			weight: 4,
-			opacity: 0.5,
-			fill: true,
 			fillColor: null, //same as color by default
-			fillOpacity: 0.2,
 			clickable: true
 		},
 		showRadius: true,
@@ -47,17 +41,17 @@ L.Draw.Circle = L.Draw.SimpleShape.extend({
 			useMetric = this.options.metric,
 			radius;
 
-		this._tooltip.updatePosition(latlng);
+		//this._tooltip.updatePosition(latlng);
 		if (this._isDrawing) {
 			this._drawShape(latlng);
 
 			// Get the new radius (rounded to 1 dp)
-			radius = this._shape.getRadius().toFixed(1);
+			//radius = this._shape.getRadius().toFixed(1);
 
-			this._tooltip.updateContent({
+/*			this._tooltip.updateContent({
 				text: this._endLabelText,
 				subtext: showRadius ? 'Radius: ' + L.GeometryUtil.readableDistance(radius, useMetric) : ''
-			});
+			});*/
 		}
 	}
 });

@@ -7,9 +7,6 @@ L.Control.Draw = L.Control.extend({
 	},
 
 	initialize: function (options) {
-		if (L.version < '0.7') {
-			throw new Error('Leaflet.draw 0.2.3+ requires Leaflet 0.7.0+. Download latest from https://github.com/Leaflet/Leaflet/');
-		}
 
 		L.Control.prototype.initialize.call(this, options);
 
@@ -26,7 +23,7 @@ L.Control.Draw = L.Control.extend({
 			// Listen for when toolbar is enabled
 			this._toolbars[id].on('enable', this._toolbarEnabled, this);
 		}
-
+console.log('this.options.edit',this.options.edit)
 		if (L.EditToolbar && this.options.edit) {
 			toolbar = new L.EditToolbar(this.options.edit);
 			id = L.stamp(toolbar);
