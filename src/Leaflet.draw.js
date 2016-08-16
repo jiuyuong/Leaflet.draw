@@ -8,12 +8,12 @@ L.drawLocal = {
 	draw: {
 		toolbar: {
 			actions: {
-				title: 'Cancel drawing',
-				text: 'Cancel'
+				title: '取消描绘',
+				text: '取消'
 			},
 			undo: {
-				title: 'Delete last point drawn',
-				text: 'Delete last point'
+				title: '撤消最后一点操作',
+				text: '撤消最后一点操作'
 			},
 			buttons: {
 				polyline: 'Draw a polyline',

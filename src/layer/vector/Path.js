@@ -3,8 +3,7 @@
  */
 L.Path.mergeOptions({
     weight: 2,
-    color: '#ff0000',
-    radius: 15
+    color: '#ff0000'
 });
 L.Path.include({
    _getCenterPart:function () {
@@ -61,13 +60,9 @@ L.SVG.include({
     },
     _updateText: function (layer) {
         var e = layer._getCenterPart();
-        if(e){
+        if(e) {
             layer._text.setAttribute("x", e.x);
-            if (L.Browser.ie) {
-                layer._text.setAttribute("y", e.y)
-            } else {
-                layer._text.setAttribute("y", e.y);
-            }
+            layer._text.setAttribute("y", e.y);
             layer._text.textContent = layer.options.string || layer.options.text;
         }
     }

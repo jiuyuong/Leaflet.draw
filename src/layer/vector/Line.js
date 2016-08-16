@@ -28,11 +28,5 @@ L.Line = L.DragPath.extend({
     },
     _update:function() {
         this._renderer._updatePoly(this);
-        /*if (!L.Browser.svg) return "";
-        var s = this._startPoint,
-            e = this._endPoint,
-            str = "M" + s.x + "," + s.y;
-        str += "L" + e.x + "," + e.y;
-        return str;*/
     }
 });

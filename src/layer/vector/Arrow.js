@@ -7,7 +7,7 @@ L.Arrow = L.Line.extend({
         this.arrowBounds = new L.LatLngBounds(new L.LatLng(.0055, .0055), new L.LatLng(0, 0));
     },
     options:{
-        fill:'#ff0000'
+        fill:true
     },
     fillable:function() {
         return true;
@@ -18,7 +18,6 @@ L.Arrow = L.Line.extend({
             t = this._map.latLngToLayerPoint(this.arrowBounds.getNorthEast());
         this._arrHeadWidth = Math.abs(e.x - t.x);
         this._arrHeadLen = Math.abs(e.y - t.y);
-        console.log(this._arrHeadWidth,this._arrHeadLen)
         var start = this._startPoint,
             end = this._endPoint,
             headLen = Math.min(this._arrHeadLen,10),
