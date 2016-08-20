@@ -48,14 +48,15 @@ L.SVG.include({
     },
     _updateTextStyle: function (layer) {
         if(layer._text) {
-            layer._text.setAttribute("font-family", layer.options["font-family"]);
+            layer.options["font-size"] && layer._text.setAttribute("font-size", layer.options["font-size"]);
+            layer.options["font-family"] && layer._text.setAttribute("font-family", layer.options["font-family"]);
             layer._text.setAttribute("fill", layer.options.color);
             layer._text.setAttribute('stroke', layer.options.color);
-            layer._text.setAttribute("font-style", layer.options["font-style"]);
-            layer._text.setAttribute("font-weight", layer.options["font-weight"]);
+            layer.options["font-style"] && layer._text.setAttribute("font-style", layer.options["font-style"]);
+            layer.options["font-weight"] && layer._text.setAttribute("font-weight", layer.options["font-weight"]);
             layer._text.setAttribute("text-anchor", "middle");
             layer._text.setAttribute("dominant-baseline", "central");
-            layer._text.setAttribute("text-decoration", layer.options["text-decoration"]);
+            layer.options["text-decoration"] && layer._text.setAttribute("text-decoration", layer.options["text-decoration"]);
         }
     },
     _updateText: function (layer) {
@@ -65,5 +66,44 @@ L.SVG.include({
             layer._text.setAttribute("y", e.y);
             layer._text.textContent = layer.options.string || layer.options.text;
         }
+    },
+    _q:function (e, t, s, i) {
+        return "Q" + [ e, t, s, i ].join(",");
+    },
+
+    _updateCloud: function (layer,bufSize) {
+        if(!bufSize)
+            bufSize = 15;
+
+        var parts = layer._parts[0];
+        if(!parts || parts.length!=4)
+            return;
+        var e,
+            r,
+            p = L.point(parts[1].x, parts[1].y),
+            n = "M" + p.x + "," + p.y;
+
+        for (e = parts[1].x; e <= parts[2].x; e += bufSize) {
+            r = Math.min(bufSize,parts[2].x-e);
+            p = p.add(L.point(r,0));
+            n += this._q(p.x - r / 2, p.y - r, p.x, p.y);
+        }
+        for (e = parts[2].y; e <= parts[3].y; e += bufSize) {
+            r = Math.min(bufSize,parts[3].y-e);
+            p = p.add(L.point(0,r));
+            n += this._q(p.x + r, p.y - r / 2, p.x, p.y);
+        }
+        for (e = parts[3].x; e >= parts[0].x; e-= bufSize) {
+            r = Math.min(bufSize,e-parts[0].x);
+            p = p.subtract(L.point(r,0));
+            n += this._q(p.x + r / 2, p.y + r, p.x, p.y);
+        }
+        for (e = parts[0].y; e >= parts[1].y; e-= bufSize) {
+            r = Math.min(bufSize,e-parts[1].y);
+            p = p.subtract(L.point(0,r));
+            n += this._q(p.x - r, p.y + r / 2, p.x, p.y);
+        }
+        n += "z";
+        this._setPath(layer, n);
     }
 });

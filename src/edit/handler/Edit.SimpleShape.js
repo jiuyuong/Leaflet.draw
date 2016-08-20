@@ -27,6 +27,7 @@ L.Edit.SimpleShape = L.Handler.extend({
 			this._map.addLayer(this._markerGroup);
 
 			this._shape.on('move',this.move,this);
+			this._setEditStyle();
 		}
 	},
 	move:function (e) {
@@ -38,20 +39,43 @@ L.Edit.SimpleShape = L.Handler.extend({
 		});
 	},
 	removeHooks: function () {
+		this._resovleEditStyle();
 		this._shape.off('move',this.move,this);
 		if (this._shape._map) {
-			this._unbindMarker(this._moveMarker);
 
-			for (var i = 0, l = this._resizeMarkers.length; i < l; i++) {
-				this._unbindMarker(this._resizeMarkers[i]);
+			this._moveMarker && this._unbindMarker(this._moveMarker);
+
+			if(this._resizeMarkers) {
+				for (var i = 0, l = this._resizeMarkers.length; i < l; i++) {
+					this._unbindMarker(this._resizeMarkers[i]);
+				}
+				this._resizeMarkers = null;
 			}
-			this._resizeMarkers = null;
-
-			this._map.removeLayer(this._markerGroup);
-			delete this._markerGroup;
+			if(this._markerGroup) {
+				this._map.removeLayer(this._markerGroup);
+				delete this._markerGroup;
+			}
 		}
 
 		this._map = null;
+	},
+
+	_setEditStyle: function () {
+		this._shape.orgOptions = {
+			dashArray:this._shape.options.dashArray,
+			fill:this._shape.options.fill,
+			fillOpacity:this._shape.options.fillOpacity
+		};
+		this._shape.setStyle({
+			dashArray:'5 6',
+			fill:true,
+			fillOpacity:0.2
+		});
+	},
+
+	_resovleEditStyle: function () {
+		this._shape.setStyle(this._shape.orgOptions);
+		delete this._shape.orgOptions;
 	},
 
 	updateMarkers: function () {

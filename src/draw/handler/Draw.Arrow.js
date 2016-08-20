@@ -10,7 +10,7 @@ L.Draw.Arrow = L.Draw.SimpleShape.extend({
         shapeOptions: {
             stroke: true,
             opacity: 1,
-            fill: false,
+            fill: true,
             clickable: true
         }
     },

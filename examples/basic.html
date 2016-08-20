@@ -18,6 +18,10 @@
 	<script src="../src/layer/vector/Line.js"></script>
 	<script src="../src/layer/vector/Arrow.js"></script>
 	<script src="../src/layer/vector/Task.js"></script>
+	<script src="../src/layer/vector/Pen.js"></script>
+	<script src="../src/layer/vector/Highlighter.js"></script>
+	<script src="../src/layer/vector/Cloud.js"></script>
+
 
 	<script src="../src/Leaflet.draw.js"></script>
 
@@ -29,10 +33,13 @@
 	<script src="../src/edit/handler/Edit.Line.js"></script>
 	<script src="../src/edit/handler/Edit.Arrow.js"></script>
 	<script src="../src/edit/handler/Edit.Task.js"></script>
-
+	<script src="../src/edit/handler/Edit.Pen.js"></script>
+	<script src="../src/edit/handler/Edit.Highlighter.js"></script>
+	<script src="../src/edit/handler/Edit.Cloud.js"></script>
 
 
 	<script src="../src/draw/handler/Draw.Feature.js"></script>
+	<script src="../src/draw/handler/Draw.Features.js"></script>
 	<script src="../src/draw/handler/Draw.Polyline.js"></script>
 	<script src="../src/draw/handler/Draw.Polygon.js"></script>
 	<script src="../src/draw/handler/Draw.SimpleShape.js"></script>
@@ -42,6 +49,13 @@
 	<script src="../src/draw/handler/Draw.Line.js"></script>
 	<script src="../src/draw/handler/Draw.Arrow.js"></script>
 	<script src="../src/draw/handler/Draw.Task.js"></script>
+	<script src="../src/draw/handler/Draw.Color.js"></script>
+	<script src="../src/draw/handler/Draw.Shapes.js"></script>
+	<script src="../src/draw/handler/Draw.Colors.js"></script>
+	<script src="../src/draw/handler/Draw.Tasks.js"></script>
+	<script src="../src/draw/handler/Draw.Pen.js"></script>
+	<script src="../src/draw/handler/Draw.Highlighter.js"></script>
+	<script src="../src/draw/handler/Draw.Cloud.js"></script>
 
 
 	<script src="../src/ext/LatLngUtil.js"></script>
@@ -80,6 +94,28 @@
 			map:{
 				el:'map',
 				sheet:'jpg.jpg'
+			},
+			draw:{
+				draw:{
+					tasks: [
+						{
+							text: 'SC',
+							description:'\u5b9e\u6d4b\u503c'
+						},{
+							text: '\u95e8\u7a97',
+							description:'\u7cbe\u88c5\u7c7b\u95e8\u7a97\u95ee\u9898'
+						},{
+							text: '\u95e8',
+							description:'\u7cbe\u88c5\u7c7b\u95e8\u7a97\u95ee\u9898'
+						},{
+							text: '\u7a97',
+							description:'\u7cbe\u88c5\u7c7b\u95e8\u7a97\u95ee\u9898\u7cbe\u88c5\u7c7b\u95e8\u7a97\u95ee\u9898'
+						},{
+							text: '\u7cbe',
+							description:'\u7cbe\u88c5\u7c7b\u95e8\u7a97\u95ee\u9898'
+						}
+					]
+				}
 			}
 		});
 	</script>

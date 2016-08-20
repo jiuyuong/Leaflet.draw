@@ -3,13 +3,13 @@
  */
 L.Draw.Line = L.Draw.SimpleShape.extend({
     statics: {
-        TYPE: 'pen'
+        TYPE: 'line'
     },
 
     options:{
         shapeOptions: {
             stroke: true,
-            weight: 3,
+            weight: 2,
             opacity: 1,
             fill: false,
             clickable: true
@@ -24,7 +24,6 @@ L.Draw.Line = L.Draw.SimpleShape.extend({
         if(this._shape)
             this._shape.setEndpoints(this._startLatLng, e)
         else {
-            //this.options.color = PG.SelectedColor;
             this._shape = new L.Line(this._startLatLng, e, this._makeShapeOptions());
             this._map.addLayer(this._shape);
         }

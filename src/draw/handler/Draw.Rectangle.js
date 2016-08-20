@@ -6,7 +6,8 @@ L.Draw.Rectangle = L.Draw.SimpleShape.extend({
 	options: {
 		shapeOptions: {
 			fillColor: null, //same as color by default
-			clickable: true
+			clickable: true,
+			fill:false
 		}
 	},
 

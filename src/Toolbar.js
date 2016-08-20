@@ -36,7 +36,8 @@ L.Toolbar = L.Class.extend({
 					this._toolbarContainer,
 					buttonIndex++,
 					buttonClassPrefix,
-					modeHandlers[i].title
+					modeHandlers[i].title,
+					modeHandlers[i].text
 				);
 			}
 		}
@@ -50,7 +51,7 @@ L.Toolbar = L.Class.extend({
 		this._lastButtonIndex = --buttonIndex;
 
 		// Create empty actions part of the toolbar
-		this._actionsContainer = L.DomUtil.create('ul', 'leaflet-draw-actions');
+		this._actionsContainer = L.DomUtil.create('div', 'leaflet-draw-actions');
 
 		// Add draw and cancel containers to the control container
 		container.appendChild(this._toolbarContainer);
@@ -91,9 +92,10 @@ L.Toolbar = L.Class.extend({
 		}
 		this._actionButtons = [];
 		this._actionsContainer = null;
+		//this._actionsContainerUL = null;
 	},
 
-	_initModeHandler: function (handler, container, buttonIndex, classNamePredix, buttonTitle) {
+	_initModeHandler: function (handler, container, buttonIndex, classNamePredix, buttonTitle, text) {
 		var type = handler.type;
 
 		this._modes[type] = {};
@@ -108,7 +110,14 @@ L.Toolbar = L.Class.extend({
 			context: this._modes[type].handler
 		});
 
+		if(text){
+			this._modes[type].button.innerHTML = text;
+		}
+
 		this._modes[type].buttonIndex = buttonIndex;
+
+		if(this._modes[type].handler.addButton)
+			this._modes[type].handler.addButton(this._modes[type].button);
 
 		this._modes[type].handler
 			.on('enabled', this._handlerActivated, this)
@@ -121,6 +130,10 @@ L.Toolbar = L.Class.extend({
 
 		if (options.text) {
 			link.innerHTML = options.text;
+		}
+
+		if (options.className){
+			link.className = options.className;
 		}
 
 		if (options.title) {
@@ -153,6 +166,7 @@ L.Toolbar = L.Class.extend({
 		// Cache new active feature
 		this._activeMode = this._modes[e.handler];
 
+
 		L.DomUtil.addClass(this._activeMode.button, 'leaflet-draw-toolbar-button-enabled');
 
 		this._showActionsToolbar();
@@ -174,7 +188,7 @@ L.Toolbar = L.Class.extend({
 		var container = this._actionsContainer,
 			buttons = this.getActions(handler),
 			l = buttons.length,
-			li, di, dl, button;
+			div, di, dl, button;
 
 		// Dispose the actions toolbar (todo: dispose only not used buttons)
 		for (di = 0, dl = this._actionButtons.length; di < dl; di++) {
@@ -192,15 +206,32 @@ L.Toolbar = L.Class.extend({
 				continue;
 			}
 
-			li = L.DomUtil.create('li', '', container);
+			div = L.DomUtil.create('div', 'action action_'+handler.type, container);
 
-			button = this._createButton({
-				title: buttons[i].title,
-				text: buttons[i].text,
-				container: li,
-				callback: buttons[i].callback,
-				context: buttons[i].context
-			});
+
+
+			if(buttons[i].description){
+				button = this._createButton({
+					className: buttons[i].className,
+					title: buttons[i].title,
+					container: div,
+					callback: buttons[i].callback,
+					context: buttons[i].context
+				});
+				button.title = buttons[i].description;
+				L.DomUtil.create('span', 'text', button).innerHTML = buttons[i].text;
+				L.DomUtil.create('span', 'desc', button).innerHTML = buttons[i].description;
+			}
+			else{
+				button = this._createButton({
+					className: buttons[i].className,
+					title: buttons[i].title,
+					text: buttons[i].text,
+					container: div,
+					callback: buttons[i].callback,
+					context: buttons[i].context
+				});
+			}
 
 			this._actionButtons.push({
 				button: button,
@@ -217,20 +248,22 @@ L.Toolbar = L.Class.extend({
 		// Recreate action buttons on every click
 		this._createActions(this._activeMode.handler);
 
-		// Correctly position the cancel button
-		this._actionsContainer.style.top = toolbarPosition + 'px';
+		if(this._actionButtons.length) {
+			// Correctly position the cancel button
+			this._actionsContainer.style.top = toolbarPosition + 'px';
 
-		if (buttonIndex === 0) {
-			L.DomUtil.addClass(this._toolbarContainer, 'leaflet-draw-toolbar-notop');
-			L.DomUtil.addClass(this._actionsContainer, 'leaflet-draw-actions-top');
+			if (buttonIndex === 0) {
+				L.DomUtil.addClass(this._toolbarContainer, 'leaflet-draw-toolbar-notop');
+				L.DomUtil.addClass(this._actionsContainer, 'leaflet-draw-actions-top');
+			}
+
+			if (buttonIndex === lastButtonIndex) {
+				L.DomUtil.addClass(this._toolbarContainer, 'leaflet-draw-toolbar-nobottom');
+				L.DomUtil.addClass(this._actionsContainer, 'leaflet-draw-actions-bottom');
+			}
+
+			this._actionsContainer.style.display = 'block';
 		}
-
-		if (buttonIndex === lastButtonIndex) {
-			L.DomUtil.addClass(this._toolbarContainer, 'leaflet-draw-toolbar-nobottom');
-			L.DomUtil.addClass(this._actionsContainer, 'leaflet-draw-actions-bottom');
-		}
-
-		this._actionsContainer.style.display = 'block';
 	},
 
 	_hideActionsToolbar: function () {

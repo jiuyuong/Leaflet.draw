@@ -2,6 +2,9 @@ L.SimpleShape = {};
 
 L.Draw.SimpleShape = L.Draw.Feature.extend({
 	options: {
+		shapeOptions: {
+			fill:false
+		},
 		repeatMode: false
 	},
 

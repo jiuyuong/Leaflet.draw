@@ -17,7 +17,7 @@ L.Draw.Feature = L.Handler.extend({
 	},
 
 	enable: function () {
-		if (this._enabled) { return; }
+		if (this._enabled) { this.disable(); return; }
 
 		this.fire('enabled', { handler: this.type });
 

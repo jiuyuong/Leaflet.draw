@@ -6,14 +6,12 @@ L.Draw.Circle = L.Draw.SimpleShape.extend({
 	options: {
 		shapeOptions: {
 			fillColor: null, //same as color by default
-			clickable: true
-		},
-		showRadius: true,
-		metric: true // Whether to use the metric meaurement system or imperial
+			clickable: true,
+			fill:false
+		}
 	},
 
 	initialize: function (map, options) {
-		// Save the type so super can fire, need to do this as cannot do this.TYPE :(
 		this.type = L.Draw.Circle.TYPE;
 
 		this._initialLabelText = L.drawLocal.draw.handlers.circle.tooltip.start;
@@ -36,22 +34,9 @@ L.Draw.Circle = L.Draw.SimpleShape.extend({
 	},
 
 	_onMouseMove: function (e) {
-		var latlng = e.latlng,
-			showRadius = this.options.showRadius,
-			useMetric = this.options.metric,
-			radius;
-
-		//this._tooltip.updatePosition(latlng);
+		var latlng = e.latlng;
 		if (this._isDrawing) {
 			this._drawShape(latlng);
-
-			// Get the new radius (rounded to 1 dp)
-			//radius = this._shape.getRadius().toFixed(1);
-
-/*			this._tooltip.updateContent({
-				text: this._endLabelText,
-				subtext: showRadius ? 'Radius: ' + L.GeometryUtil.readableDistance(radius, useMetric) : ''
-			});*/
 		}
 	}
 });

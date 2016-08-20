@@ -15,7 +15,10 @@ var deps = {
 			'layer/DragPath.js',
 			'layer/vector/Line.js',
 			'layer/vector/Arrow.js',
-			'layer/vector/Task.js'
+			'layer/vector/Task.js',
+			'layer/vector/Pen.js',
+			'layer/vector/Highlighter.js',
+			'layer/vector/Cloud.js'
 		],
 		desc:'layer s',
 		deps:['Core']
@@ -24,6 +27,7 @@ var deps = {
 	DrawHandlers: {
 		src: [
 			'draw/handler/Draw.Feature.js',
+			'draw/handler/Draw.Features.js',
 			'draw/handler/Draw.Polyline.js',
 			'draw/handler/Draw.Polygon.js',
 			'draw/handler/Draw.SimpleShape.js',
@@ -32,7 +36,14 @@ var deps = {
 			'draw/handler/Draw.Marker.js',
 			'draw/handler/Draw.Line.js',
 			'draw/handler/Draw.Arrow.js',
-			'draw/handler/Draw.Task.js'
+			'draw/handler/Draw.Task.js',
+			'draw/handler/Draw.Color.js',
+			'draw/handler/Draw.Shapes.js',
+			'draw/handler/Draw.Colors.js',
+			'draw/handler/Draw.Tasks.js',
+			'draw/handler/Draw.Pen.js',
+			'draw/handler/Draw.Highlighter.js',
+			'draw/handler/Draw.Cloud.js'
 		],
 		desc: 'Drawing handlers for: polylines, polygons, rectangles, circles and markers.',
 		deps: ['Core']
@@ -46,7 +57,10 @@ var deps = {
 			'edit/handler/Edit.Circle.js',
 			'edit/handler/Edit.Line.js',
 			'edit/handler/Edit.Arrow.js',
-			'edit/handler/Edit.Task.js'
+			'edit/handler/Edit.Task.js',
+			'edit/handler/Edit.Pen.js',
+			'edit/handler/Edit.Highlighter.js',
+			'edit/handler/Edit.Cloud.js'
 		],
 		desc: 'Editing handlers for: polylines, polygons, rectangles, and circles.',
 		deps: ['Core']

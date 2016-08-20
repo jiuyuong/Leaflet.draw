@@ -9,8 +9,9 @@ L.Arrow = L.Line.extend({
     options:{
         fill:true
     },
-    fillable:function() {
-        return true;
+    setStyle: function (style) {
+        L.Line.prototype.setStyle.call(this,style);
+        return this;
     },
     _project:function() {
         L.Line.prototype._project.call(this);

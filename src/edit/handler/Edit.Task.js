@@ -3,8 +3,10 @@
  */
 L.Edit.Task = L.Edit.SimpleShape.extend({
     addHooks: function () {
+        this._setEditStyle();
     },
     removeHooks: function () {
+        this._resovleEditStyle();
         this._map = null;
     }
 });

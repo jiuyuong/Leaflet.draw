@@ -10,12 +10,20 @@ L.Task = L.CircleMarker.extend({
     },
     _project:function () {
         var map = this._map;
-        this._radius = Math.pow(2,Math.max(Math.min(map.getZoom()-7,4),3));
+        this._radius = Math.pow(2,Math.max(Math.min(map.getZoom()-7,4),1));
+        //console.log(this._radius);
+        //this.options.string = this._radius<8 ?' ':null;
+        this.options["font-size"] = this._radius -2 ;
         this._point = map.latLngToLayerPoint(this._latlng);
     },
     _updatePath: function () {
         this._renderer._updateCircle(this);
+        this._renderer._updateTextStyle(this);
         this._renderer._updateText(this);
+    },
+    setStyle:function (style) {
+        L.CircleMarker.prototype.setStyle.call(this,style);
+        this._renderer._updateTextStyle(this);
     },
     getBounds: function () {
         var half = [this._radius, this._radius];

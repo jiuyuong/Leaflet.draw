@@ -5,6 +5,7 @@ L.Line = L.DragPath.extend({
     initialize:function(start, end, options) {
         this._start = start;
         this._end = end;
+        L.setOptions(this,options);
     },
     options:{
         fillOpacity: 1

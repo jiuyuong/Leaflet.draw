@@ -80,7 +80,7 @@ L.Matters = L.Evented.extend({
                         return;
                     }
                 }
-                var toolbar = L.DomUtil.create('div', 'leaflet-draw-subbuttom'),
+                /*var toolbar = L.DomUtil.create('div', 'leaflet-draw-subbuttom'),
                     ul = L.DomUtil.create('ul', '', toolbar);
                 overLayers.forEach(function (layer) {
                     var li = L.DomUtil.create('li', '', ul),
@@ -99,7 +99,7 @@ L.Matters = L.Evented.extend({
                         self._map.closePopup();
                         self._fireEditLayer(layer);
                     });
-                });
+                });*/
 
                 self._map.openPopup(toolbar, p, {
                     closeButton: false
@@ -121,7 +121,8 @@ L.Matters = L.Evented.extend({
             return;
         }
         self.editingLayer = layer;
-        layer && layer.edit();
+        if(layer)
+            layer.edit();
     },
     isMiddleNumber: function (n1, n2, n, f) {
         if (f) { //修正线难被点到的问题

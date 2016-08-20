@@ -6,17 +6,15 @@ L.Draw.Task = L.Draw.Feature.extend({
         TYPE: 'task'
     },
 
-    options: {
-        shapeOptions: {
-
-        }
-    },
-
     initialize: function (map, options) {
-        // Save the type so super can fire, need to do this as cannot do this.TYPE :(
+        this.options = {
+            shapeOptions:{
+                fill:false
+            }
+        };
         this.type = L.Draw.Task.TYPE;
-
         L.Draw.Feature.prototype.initialize.call(this, map, options);
+        this.options.shapeOptions.text = options.text;
     },
 
     addHooks: function () {
@@ -46,7 +44,7 @@ L.Draw.Task = L.Draw.Feature.extend({
     },
 
     _fireCreatedEvent: function () {
-        var task = new L.Task(this._latlng, this.options.shapeOptions);
+        var task = new L.Task(this._latlng, L.extend({text:this.options.text},this.options.shapeOptions));
         L.Draw.Feature.prototype._fireCreatedEvent.call(this, task);
     }
 });
